@@ -12,23 +12,23 @@ public class EnderecoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long enderecoId;
 
-    @NotNull
+    @NotNull(message = "O campo 'cep' é obrigatório")
     private Integer cep;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'cidade' é obrigatório")
     private String cidade;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'estado' é obrigatório")
     private String estado;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'logradouro' é obrigatório")
     private String logradouro;
 
     private Integer numero;
 
     private String complemento;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'bairro' é obrigatório")
     private String bairro;
 
     private String pontoReferencia;
