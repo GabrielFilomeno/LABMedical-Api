@@ -55,9 +55,9 @@ public class PacienteEntity {
     @Pattern(regexp = "\\\\d{10,11}")
     private String contatoEmergencia;
 
-    private String listaAlergias;
+    private String alergias;
 
-    private String listaCuidados;
+    private String cuidados;
 
     private String convenio;
 
@@ -159,20 +159,20 @@ public class PacienteEntity {
         this.contatoEmergencia = contatoEmergencia;
     }
 
-    public String getListaAlergias() {
-        return listaAlergias;
+    public String getAlergias() {
+        return alergias;
     }
 
-    public void setListaAlergias(String listaAlergias) {
-        this.listaAlergias = listaAlergias;
+    public void setAlergias(String alergias) {
+        this.alergias = alergias;
     }
 
-    public String getListaCuidados() {
-        return listaCuidados;
+    public String getCuidados() {
+        return cuidados;
     }
 
-    public void setListaCuidados(String listaCuidados) {
-        this.listaCuidados = listaCuidados;
+    public void setCuidados(String cuidados) {
+        this.cuidados = cuidados;
     }
 
     public String getConvenio() {
