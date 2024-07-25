@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "pacientes")
@@ -66,7 +67,15 @@ public class PacienteEntity {
     private LocalDate validadeConvenio;
 
     @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
     private EnderecoEntity endereco;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<ConsultaEntity> ListaConsultas;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<ConsultaEntity> ListaExames;
 
     //TODO: criar atributo perfil
 
@@ -205,5 +214,21 @@ public class PacienteEntity {
 
     public void setEndereco(@NotNull EnderecoEntity endereco) {
         this.endereco = endereco;
+    }
+
+    public List<ConsultaEntity> getListaConsultas() {
+        return ListaConsultas;
+    }
+
+    public void setListaConsultas(List<ConsultaEntity> listaConsultas) {
+        ListaConsultas = listaConsultas;
+    }
+
+    public List<ConsultaEntity> getListaExames() {
+        return ListaExames;
+    }
+
+    public void setListaExames(List<ConsultaEntity> listaExames) {
+        ListaExames = listaExames;
     }
 }
