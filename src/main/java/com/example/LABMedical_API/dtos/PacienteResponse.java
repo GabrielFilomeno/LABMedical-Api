@@ -1,66 +1,32 @@
-package com.example.LABMedical_API.entities;
+package com.example.LABMedical_API.dtos;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.example.LABMedical_API.entities.EnderecoEntity;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 import java.time.LocalDate;
-import java.util.List;
 
-@Entity
-@Table(name = "pacientes")
-public class PacienteEntity {
+public class PacienteResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pacienteId;
-
     private String nomePaciente;
-
     private String generoPaciente;
-
     private LocalDate dataNascimento;
-
-    @Column(unique=true)
     private String cpfPaciente;
-
-    @Column(unique=true)
     private String rgPaciente;
-
     private String estadoCivil;
-
     private String telefonePaciente;
-
-    @Column(unique=true)
     private String emailPaciente;
-
     private String naturalidade;
-
     private String contatoEmergencia;
-
     private String alergias;
-
     private String cuidados;
-
     private String convenio;
-
     private Integer numeroConvenio;
-
     private LocalDate validadeConvenio;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
     private EnderecoEntity endereco;
-
-    @OneToMany(mappedBy = "paciente")
-    private List<ConsultaEntity> ListaConsultas;
-
-    @OneToMany(mappedBy = "paciente")
-    private List<ConsultaEntity> ListaExames;
-
-    //TODO: criar atributo perfil e tratar erros relacionados
-
 
     public Long getPacienteId() {
         return pacienteId;
@@ -196,21 +162,5 @@ public class PacienteEntity {
 
     public void setEndereco(EnderecoEntity endereco) {
         this.endereco = endereco;
-    }
-
-    public List<ConsultaEntity> getListaConsultas() {
-        return ListaConsultas;
-    }
-
-    public void setListaConsultas(List<ConsultaEntity> listaConsultas) {
-        ListaConsultas = listaConsultas;
-    }
-
-    public List<ConsultaEntity> getListaExames() {
-        return ListaExames;
-    }
-
-    public void setListaExames(List<ConsultaEntity> listaExames) {
-        ListaExames = listaExames;
     }
 }
