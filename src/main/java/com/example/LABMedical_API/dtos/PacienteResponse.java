@@ -1,10 +1,6 @@
 package com.example.LABMedical_API.dtos;
 
 import com.example.LABMedical_API.entities.EnderecoEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 
 import java.time.LocalDate;
 

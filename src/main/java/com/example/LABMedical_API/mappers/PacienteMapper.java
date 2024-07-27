@@ -1,10 +1,19 @@
 package com.example.LABMedical_API.mappers;
 
 import com.example.LABMedical_API.dtos.EnderecoRequest;
+import com.example.LABMedical_API.dtos.ListarPacientesResponse;
 import com.example.LABMedical_API.dtos.PacienteRequest;
 import com.example.LABMedical_API.dtos.PacienteResponse;
 import com.example.LABMedical_API.entities.EnderecoEntity;
 import com.example.LABMedical_API.entities.PacienteEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PacienteMapper {
 
     public PacienteMapper() {
@@ -79,5 +88,29 @@ public class PacienteMapper {
         return target;
     }
 
+    public static Page<ListarPacientesResponse> listarPacientesResponseMap(Page<PacienteEntity> source) {
 
+        List<ListarPacientesResponse> listaResponse = new ArrayList<>();
+
+        for (PacienteEntity pacienteEntity : source) {
+
+            ListarPacientesResponse listarPacientesResponse = new ListarPacientesResponse();
+
+            listarPacientesResponse.setPacienteId(pacienteEntity.getPacienteId());
+            listarPacientesResponse.setNomePaciente(pacienteEntity.getNomePaciente());
+            listarPacientesResponse.setTelefonePaciente(pacienteEntity.getTelefonePaciente());
+            listarPacientesResponse.setConvenio(pacienteEntity.getConvenio());
+
+            LocalDate dataNascimento = pacienteEntity.getDataNascimento();
+            LocalDate dataAtual = LocalDate.now();
+
+            Period periodo = Period.between(dataNascimento, dataAtual);
+
+            listarPacientesResponse.setIdade(periodo.getYears());
+
+            listaResponse.add(listarPacientesResponse);
+        }
+
+        return new PageImpl<>(listaResponse);
+    }
 }
