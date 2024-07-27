@@ -1,14 +1,17 @@
 package com.example.LABMedical_API.services;
 
 import com.example.LABMedical_API.dtos.EnderecoRequest;
+import com.example.LABMedical_API.dtos.ListarPacientesResponse;
 import com.example.LABMedical_API.dtos.PacienteRequest;
 import com.example.LABMedical_API.dtos.PacienteResponse;
 import com.example.LABMedical_API.entities.PacienteEntity;
 import com.example.LABMedical_API.repositories.PacienteRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import static com.example.LABMedical_API.mappers.PacienteMapper.pacienteMap;
-import static com.example.LABMedical_API.mappers.PacienteMapper.pacienteResponseMap;
+import static com.example.LABMedical_API.mappers.PacienteMapper.*;
 
 @Service
 public class PacienteService {
@@ -26,5 +29,26 @@ public class PacienteService {
         Long enderecoId = pacienteSalvo.getEndereco().getEnderecoId();
 
         return pacienteResponseMap(pacienteRequest, enderecoRequest, pacienteId, enderecoId);
+    }
+
+    public Page<ListarPacientesResponse> listarPacientes(PacienteRequest filtros, Pageable paginacao) {
+
+        if (pacienteRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Não há pacientes cadastrados");
+        }
+
+        String filtroNome = filtros.getNomePaciente() != null ? filtros.getNomePaciente() : "";
+        String filtroTelefone = filtros.getTelefonePaciente() != null ? filtros.getTelefonePaciente() : "";
+        String filtroEmail = filtros.getEmailPaciente() != null ? filtros.getEmailPaciente() : "";
+
+        Page<ListarPacientesResponse> resultado = listarPacientesResponseMap(pacienteRepository.findByNomePacienteContainingIgnoreCaseAndTelefonePacienteContainingAndEmailPacienteContainingIgnoreCase(
+                filtroNome, filtroTelefone, filtroEmail, paginacao
+        ));
+
+        if (resultado.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum paciente encontrado com esses filtros");
+        }
+
+        return resultado;
     }
 }
