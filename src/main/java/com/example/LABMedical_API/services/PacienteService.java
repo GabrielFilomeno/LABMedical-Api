@@ -1,9 +1,6 @@
 package com.example.LABMedical_API.services;
 
-import com.example.LABMedical_API.dtos.EnderecoRequest;
-import com.example.LABMedical_API.dtos.ListarPacientesResponse;
-import com.example.LABMedical_API.dtos.PacienteRequest;
-import com.example.LABMedical_API.dtos.PacienteResponse;
+import com.example.LABMedical_API.dtos.*;
 import com.example.LABMedical_API.entities.PacienteEntity;
 import com.example.LABMedical_API.repositories.PacienteRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -50,5 +47,17 @@ public class PacienteService {
         }
 
         return resultado;
+    }
+
+    public BuscarPacienteResponse buscarPaciente(Long pacienteId) {
+
+        if (pacienteRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Não há pacientes cadastrados");
+        }
+
+        PacienteEntity pacienteEntity = pacienteRepository.findById(pacienteId).orElseThrow(
+                () -> new EntityNotFoundException("Paciente não encontrado com o id: " + pacienteId)
+        );
+        return buscarPacienteMap(pacienteEntity);
     }
 }

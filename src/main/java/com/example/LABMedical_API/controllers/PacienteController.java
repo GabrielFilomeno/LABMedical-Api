@@ -1,9 +1,6 @@
 package com.example.LABMedical_API.controllers;
 
-import com.example.LABMedical_API.dtos.ListarPacientesResponse;
-import com.example.LABMedical_API.dtos.PacienteEnderecoRequest;
-import com.example.LABMedical_API.dtos.PacienteRequest;
-import com.example.LABMedical_API.dtos.PacienteResponse;
+import com.example.LABMedical_API.dtos.*;
 import com.example.LABMedical_API.services.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -33,5 +30,11 @@ public class PacienteController {
     public Page<ListarPacientesResponse> listarPacientes(PacienteRequest filtros, Pageable paginacao){
 
         return pacienteService.listarPacientes(filtros, paginacao);
+    }
+
+    @GetMapping("/{pacienteId}")
+    @ResponseStatus(HttpStatus.OK)
+    public BuscarPacienteResponse buscarPaciente(@PathVariable Long pacienteId){
+        return pacienteService.buscarPaciente(pacienteId);
     }
 }
