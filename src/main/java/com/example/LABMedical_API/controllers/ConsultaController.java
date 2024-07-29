@@ -22,4 +22,10 @@ public class ConsultaController {
     public ConsultaResponse cadastrarConsulta(@Valid @RequestBody ConsultaRequest request) {
         return consultaService.cadastrarConsulta(request);
     }
+
+    @GetMapping("/{consultaId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ConsultaResponse buscarConsulta(@PathVariable Long consultaId) {
+        return consultaService.buscarConsulta(consultaId);
+    }
 }
