@@ -43,4 +43,10 @@ public class PacienteController {
     public PacienteResponse atualizarPaciente(@PathVariable Long pacienteId,@Valid @RequestBody PacienteEnderecoRequest request){
         return pacienteService.atualizarPaciente(pacienteId, request.getPacienteRequest(), request.getEnderecoRequest());
     }
+
+    @DeleteMapping("/{pacienteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluirPaciente(@PathVariable Long pacienteId) {
+        pacienteService.excluirPaciente(pacienteId);
+    }
 }

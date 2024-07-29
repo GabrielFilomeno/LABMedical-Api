@@ -77,4 +77,18 @@ public class PacienteService {
 
         return pacienteResponseMap(request, endereco, pacienteId, enderecoId);
     }
+
+    public void excluirPaciente(Long pacienteId) {
+
+        if (pacienteRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Não há pacientes cadastrados");
+        }
+
+        if(pacienteRepository.existsById(pacienteId)) {
+        pacienteRepository.deleteById(pacienteId);
+
+        } else {
+            throw new EntityNotFoundException("Paciente não encontrado com o id: " + pacienteId);
+        }
+    }
 }
