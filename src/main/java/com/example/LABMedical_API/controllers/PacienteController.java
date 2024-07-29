@@ -37,4 +37,10 @@ public class PacienteController {
     public BuscarPacienteResponse buscarPaciente(@PathVariable Long pacienteId){
         return pacienteService.buscarPaciente(pacienteId);
     }
+
+    @PutMapping("/{pacienteId}")
+    @ResponseStatus(HttpStatus.OK)
+    public PacienteResponse atualizarPaciente(@PathVariable Long pacienteId,@Valid @RequestBody PacienteEnderecoRequest request){
+        return pacienteService.atualizarPaciente(pacienteId, request.getPacienteRequest(), request.getEnderecoRequest());
+    }
 }

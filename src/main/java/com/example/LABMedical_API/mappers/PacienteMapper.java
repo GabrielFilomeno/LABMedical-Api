@@ -5,6 +5,7 @@ import com.example.LABMedical_API.entities.EnderecoEntity;
 import com.example.LABMedical_API.entities.PacienteEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -85,6 +86,7 @@ public class PacienteMapper {
     }
 
     public static Page<ListarPacientesResponse> listarPacientesResponseMap(Page<PacienteEntity> source) {
+        if (source== null) return null;
 
         List<ListarPacientesResponse> listaResponse = new ArrayList<>();
 
@@ -111,6 +113,7 @@ public class PacienteMapper {
     }
 
     public static BuscarPacienteResponse buscarPacienteMap(PacienteEntity source){
+        if (source== null) return null;
 
         BuscarPacienteResponse target = new BuscarPacienteResponse();
 
@@ -133,6 +136,32 @@ public class PacienteMapper {
         target.setEndereco(source.getEndereco());
         target.setNumeroConsultas(source.getListaConsultas().size());
         target.setNumeroExames(source.getListaExames().size());
+
+        return target;
+    }
+
+    public static PacienteEntity atualizarPacienteMap(PacienteEntity target, PacienteRequest source, EnderecoRequest endereco, Long enderecoId){
+        if (source== null) return null;
+
+        PacienteEntity pacienteAtualizado = pacienteMap(source, endereco);
+
+        target.setNomePaciente(source.getNomePaciente());
+        target.setGeneroPaciente(source.getGeneroPaciente());
+        target.setDataNascimento(source.getDataNascimento());
+        target.setCpfPaciente(source.getCpfPaciente());
+        target.setRgPaciente(source.getRgPaciente());
+        target.setEstadoCivil(source.getEstadoCivil());
+        target.setTelefonePaciente(source.getTelefonePaciente());
+        target.setEmailPaciente(source.getEmailPaciente());
+        target.setNaturalidade(source.getNaturalidade());
+        target.setContatoEmergencia(source.getContatoEmergencia());
+        target.setAlergias(source.getAlergias());
+        target.setCuidados(source.getCuidados());
+        target.setConvenio(source.getConvenio());
+        target.setNumeroConvenio(source.getNumeroConvenio());
+        target.setValidadeConvenio(source.getValidadeConvenio());
+        target.setEndereco(enderecoMap(endereco));
+        target.getEndereco().setEnderecoId(enderecoId);
 
         return target;
     }

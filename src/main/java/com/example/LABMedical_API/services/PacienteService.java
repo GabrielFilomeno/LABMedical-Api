@@ -60,4 +60,21 @@ public class PacienteService {
         );
         return buscarPacienteMap(pacienteEntity);
     }
+
+    public PacienteResponse atualizarPaciente(Long pacienteId, PacienteRequest request, EnderecoRequest endereco) {
+
+        if (pacienteRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Não há pacientes cadastrados");
+        }
+
+        PacienteEntity pacienteEntity = pacienteRepository.findById(pacienteId).orElseThrow(
+                () -> new EntityNotFoundException("Paciente não encontrado com o id: " + pacienteId)
+        );
+
+        Long enderecoId = pacienteEntity.getEndereco().getEnderecoId();
+
+        pacienteRepository.save(atualizarPacienteMap(pacienteEntity, request, endereco, enderecoId));
+
+        return pacienteResponseMap(request, endereco, pacienteId, enderecoId);
+    }
 }
