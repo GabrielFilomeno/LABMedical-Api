@@ -5,11 +5,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 @RestControllerAdvice
@@ -23,13 +23,13 @@ public class TratadorDeErros {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErroResponse> trataDataOuEnumInvalido(HttpMessageNotReadableException exception) {
+    @ExceptionHandler(DateTimeParseException.class)
+    public ResponseEntity<ErroResponse> trataDataInvalida(DateTimeParseException exception) {
 
         ErroResponse response = new ErroResponse();
 
         response.setCampo("Data");
-        response.setMensagem("A data deve estar no formato dd/MM/aaaa");
+        response.setMensagem("Formato de data inválido. Use o formato dd/MM/yyyy");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
