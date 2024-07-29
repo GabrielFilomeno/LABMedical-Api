@@ -143,8 +143,6 @@ public class PacienteMapper {
     public static PacienteEntity atualizarPacienteMap(PacienteEntity target, PacienteRequest source, EnderecoRequest endereco, Long enderecoId){
         if (source== null) return null;
 
-        PacienteEntity pacienteAtualizado = pacienteMap(source, endereco);
-
         target.setNomePaciente(source.getNomePaciente());
         target.setGeneroPaciente(source.getGeneroPaciente());
         target.setDataNascimento(source.getDataNascimento());

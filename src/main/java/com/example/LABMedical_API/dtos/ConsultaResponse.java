@@ -1,6 +1,5 @@
-package com.example.LABMedical_API.entities;
+package com.example.LABMedical_API.dtos;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,30 +8,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
-@Table(name = "consultas")
-public class ConsultaEntity {
+public class ConsultaResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long consultaId;
-
     private String motivoConulta;
-
     private LocalDate dataConsulta;
-
     private LocalTime horaConsulta;
-
     private String descricaoProblema;
-
     private String medicacaoReceitada;
-
     private String dosagemPrecaucoes;
-
-    @NotNull(message = "O campo 'paciente' é obrigatório")
-    @ManyToOne
-    @JoinColumn(name = "paciente_id")
-    private PacienteEntity paciente;
+    private Long pacienteId;
 
     public Long getConsultaId() {
         return consultaId;
@@ -90,11 +75,11 @@ public class ConsultaEntity {
         this.dosagemPrecaucoes = dosagemPrecaucoes;
     }
 
-    public @NotNull(message = "O campo 'paciente' é obrigatório") PacienteEntity getPaciente() {
-        return paciente;
+    public Long getPacienteId() {
+        return pacienteId;
     }
 
-    public void setPaciente(@NotNull(message = "O campo 'paciente' é obrigatório") PacienteEntity paciente) {
-        this.paciente = paciente;
+    public void setPacienteId(Long pacienteId) {
+        this.pacienteId = pacienteId;
     }
 }
