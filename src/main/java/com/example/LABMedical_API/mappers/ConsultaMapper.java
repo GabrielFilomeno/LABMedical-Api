@@ -39,4 +39,18 @@ public class ConsultaMapper {
 
         return target;
     }
+
+    public static ConsultaEntity atualizarConsultaMap(ConsultaEntity target, ConsultaRequest source, PacienteEntity paciente) {
+        if (source== null) return null;
+
+        target.setMotivoConulta(source.getMotivoConulta());
+        target.setDataConsulta(source.getDataConsulta());
+        target.setHoraConsulta(source.getHoraConsulta());
+        target.setDescricaoProblema(source.getDescricaoProblema());
+        target.setMedicacaoReceitada(source.getMedicacaoReceitada());
+        target.setDosagemPrecaucoes(source.getDosagemPrecaucoes());
+        target.setPaciente(paciente);
+
+        return target;
+    }
 }

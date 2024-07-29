@@ -39,7 +39,7 @@ public class TratadorDeErros {
 
         ErroResponse response = new ErroResponse();
 
-        response.setCampo("Falha ao cadastrar pois há algum dado duplicado");
+        response.setCampo("Erro");
         response.setMensagem(String.valueOf(exception.getMostSpecificCause()));
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
