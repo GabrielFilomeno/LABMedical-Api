@@ -28,4 +28,10 @@ public class ConsultaController {
     public ConsultaResponse buscarConsulta(@PathVariable Long consultaId) {
         return consultaService.buscarConsulta(consultaId);
     }
+
+    @PutMapping("/{consultaId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ConsultaResponse atualizarConsulta(@PathVariable Long consultaId, @Valid @RequestBody ConsultaRequest request) {
+        return consultaService.atualizarConsulta(consultaId, request);
+    }
 }

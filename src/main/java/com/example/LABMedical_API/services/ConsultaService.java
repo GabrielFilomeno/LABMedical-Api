@@ -45,4 +45,18 @@ public class ConsultaService {
 
         return consultaResponseMap(consulta);
     }
+
+    public ConsultaResponse atualizarConsulta(Long consultaId, ConsultaRequest request) {
+        if(consultaRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Não há consultas cadastradas");
+        }
+
+        ConsultaEntity consulta = consultaRepository.findById(consultaId).orElseThrow(
+                () -> new EntityNotFoundException("Consulta não encontrada com o id: " + consultaId));
+
+        PacienteEntity paciente = pacienteRepository.findById(request.getPacienteId()).orElseThrow(
+                () -> new EntityNotFoundException("Paciente não encontrado com o id: " + request.getPacienteId()));
+
+        return consultaResponseMap(consultaRepository.save(atualizarConsultaMap(consulta, request, paciente)));
+    }
 }
