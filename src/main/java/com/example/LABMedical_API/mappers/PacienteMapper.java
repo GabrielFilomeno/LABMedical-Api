@@ -5,7 +5,6 @@ import com.example.LABMedical_API.entities.EnderecoEntity;
 import com.example.LABMedical_API.entities.PacienteEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import java.time.LocalDate;
 import java.time.Period;
