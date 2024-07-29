@@ -29,7 +29,7 @@ public class TratadorDeErros {
         ErroResponse response = new ErroResponse();
 
         response.setCampo("Data");
-        response.setMensagem("Formato de data inválido. Use o formato dd/MM/yyyy");
+        response.setMensagem("Formato de data inválido. Use o formato dd/MM/yyyy ou horário no formato HH:mm");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
