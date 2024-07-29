@@ -1,9 +1,6 @@
 package com.example.LABMedical_API.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -54,10 +51,10 @@ public class PacienteEntity {
     private EnderecoEntity endereco;
 
     @OneToMany(mappedBy = "paciente")
-    private List<ConsultaEntity> ListaConsultas;
+    private List<ConsultaEntity> listaConsultas;
 
     @OneToMany(mappedBy = "paciente")
-    private List<ConsultaEntity> ListaExames;
+    private List<ExameEntity> listaExames;
 
     //TODO: criar atributo perfil e tratar erros relacionados
 
@@ -199,18 +196,18 @@ public class PacienteEntity {
     }
 
     public List<ConsultaEntity> getListaConsultas() {
-        return ListaConsultas;
+        return listaConsultas;
     }
 
     public void setListaConsultas(List<ConsultaEntity> listaConsultas) {
-        ListaConsultas = listaConsultas;
+        this.listaConsultas = listaConsultas;
     }
 
-    public List<ConsultaEntity> getListaExames() {
-        return ListaExames;
+    public List<ExameEntity> getListaExames() {
+        return listaExames;
     }
 
-    public void setListaExames(List<ConsultaEntity> listaExames) {
-        ListaExames = listaExames;
+    public void setListaExames(List<ExameEntity> listaExames) {
+        this.listaExames = listaExames;
     }
 }
