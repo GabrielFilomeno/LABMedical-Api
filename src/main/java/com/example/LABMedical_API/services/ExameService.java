@@ -2,6 +2,7 @@ package com.example.LABMedical_API.services;
 
 import com.example.LABMedical_API.dtos.ExameRequest;
 import com.example.LABMedical_API.dtos.ExameResponse;
+import com.example.LABMedical_API.entities.ExameEntity;
 import com.example.LABMedical_API.entities.PacienteEntity;
 import com.example.LABMedical_API.repositories.ExameRepository;
 import com.example.LABMedical_API.repositories.PacienteRepository;
@@ -32,5 +33,18 @@ public class ExameService {
                 () -> new EntityNotFoundException("Paciente não encontrado com o id: " + request.getPacienteId()));
 
         return exameResponseMap(exameRepository.save(exameMap(request, paciente)));
+    }
+
+    public ExameResponse buscarConsulta(Long exameId) {
+
+        if (exameRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Não há exames cadastrados");
+        }
+
+        ExameEntity exame = exameRepository.findById(exameId).orElseThrow(
+                () -> new EntityNotFoundException("Exame não encontrado com o id: " + exameId)
+        );
+
+        return exameResponseMap(exame);
     }
 }
