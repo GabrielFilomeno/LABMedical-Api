@@ -34,4 +34,10 @@ public class ConsultaController {
     public ConsultaResponse atualizarConsulta(@PathVariable Long consultaId, @Valid @RequestBody ConsultaRequest request) {
         return consultaService.atualizarConsulta(consultaId, request);
     }
+
+    @DeleteMapping("/{consultaId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluirConsulta(@PathVariable Long consultaId) {
+        consultaService.excluirPaciente(consultaId);
+    }
 }
