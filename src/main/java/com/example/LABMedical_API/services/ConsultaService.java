@@ -59,4 +59,17 @@ public class ConsultaService {
 
         return consultaResponseMap(consultaRepository.save(atualizarConsultaMap(consulta, request, paciente)));
     }
+
+    public void excluirPaciente(Long consultaId) {
+
+        if (consultaRepository.findAll().isEmpty()){
+            throw new EntityNotFoundException("Não há consultas cadastradas");
+        }
+
+        if (consultaRepository.existsById(consultaId)){
+            consultaRepository.deleteById(consultaId);
+        } else {
+            throw new EntityNotFoundException("Consulta não encontrada com o id: " + consultaId);
+        }
+    }
 }
