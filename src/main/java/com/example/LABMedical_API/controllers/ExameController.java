@@ -22,4 +22,10 @@ public class ExameController {
     public ExameResponse cadastrarExame(@Valid @RequestBody ExameRequest request) {
         return exameService.cadastrarConsulta(request);
     }
+
+    @GetMapping("/{exameId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ExameResponse buscarExame(@PathVariable Long exameId) {
+        return exameService.buscarConsulta(exameId);
+    }
 }
