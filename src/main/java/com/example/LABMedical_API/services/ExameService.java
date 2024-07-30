@@ -62,4 +62,17 @@ public class ExameService {
 
         return exameResponseMap(exameRepository.save(atualizarExameMap(exame, request, paciente)));
     }
+
+    public void excluirPaciente(Long exameId) {
+
+        if (exameRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Não há exames cadastrados");
+        }
+
+        if (exameRepository.existsById(exameId)) {
+            exameRepository.deleteById(exameId);
+        } else {
+            throw new EntityNotFoundException("Exame não encontrado com o id: " + exameId);
+        }
+    }
 }

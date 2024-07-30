@@ -34,4 +34,10 @@ public class ExameController {
     public ExameResponse atualizarExame(@PathVariable Long exameId, @Valid @RequestBody ExameRequest request) {
         return exameService.atualizarExame(exameId, request);
     }
+
+    @DeleteMapping("/{exameId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluirExame(@PathVariable Long exameId) {
+        exameService.excluirPaciente(exameId);
+    }
 }
