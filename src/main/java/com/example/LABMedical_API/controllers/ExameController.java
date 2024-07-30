@@ -28,4 +28,10 @@ public class ExameController {
     public ExameResponse buscarExame(@PathVariable Long exameId) {
         return exameService.buscarConsulta(exameId);
     }
+
+    @PutMapping("/{exameId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ExameResponse atualizarExame(@PathVariable Long exameId, @Valid @RequestBody ExameRequest request) {
+        return exameService.atualizarExame(exameId, request);
+    }
 }

@@ -9,8 +9,7 @@ import com.example.LABMedical_API.repositories.PacienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import static com.example.LABMedical_API.mappers.ExameMapper.exameMap;
-import static com.example.LABMedical_API.mappers.ExameMapper.exameResponseMap;
+import static com.example.LABMedical_API.mappers.ExameMapper.*;
 
 @Service
 public class ExameService {
@@ -46,5 +45,21 @@ public class ExameService {
         );
 
         return exameResponseMap(exame);
+    }
+
+    public ExameResponse atualizarExame(Long exameId, ExameRequest request) {
+
+        if (exameRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Não há exames cadastrados");
+        }
+
+        ExameEntity exame = exameRepository.findById(exameId).orElseThrow(
+                () -> new EntityNotFoundException("Exame não encontrado com o id: " + exameId)
+        );
+
+        PacienteEntity paciente = pacienteRepository.findById(request.getPacienteId()).orElseThrow(
+                () -> new EntityNotFoundException("Paciente não encontrado com o id: " + request.getPacienteId()));
+
+        return exameResponseMap(exameRepository.save(atualizarExameMap(exame, request, paciente)));
     }
 }
