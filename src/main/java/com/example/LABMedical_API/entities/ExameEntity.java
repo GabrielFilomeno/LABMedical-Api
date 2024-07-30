@@ -16,29 +16,20 @@ public class ExameEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long exameId;
 
-    @NotBlank(message = "O campo 'nomeExame' é obrigatório")
     private String nomeExame;
 
-    @NotNull(message = "O campo 'dataExame' é obrigatório")
     private LocalDate dataExame;
 
-    @NotNull(message = "O campo 'horaExame' é obrigatório")
     private LocalTime horaExame;
 
-    @NotBlank(message = "O campo 'tipoExame' é obrigatório")
-    @Size(min = 4, max = 32)
     private String tipoExame;
 
-    @NotBlank(message = "O campo 'laboratorio' é obrigatório")
-    @Size(min = 4, max = 32)
     private String laboratorio;
 
     private String urlDocumento;
 
-    @Size(min = 16, max = 1024)
     private String resultados;
 
-    @NotNull(message = "O campo 'paciente' é obrigatório")
     @ManyToOne
     @JoinColumn(name = "paciente_id")
     private PacienteEntity paciente;
@@ -51,43 +42,43 @@ public class ExameEntity {
         this.exameId = exameId;
     }
 
-    public @NotBlank(message = "O campo 'nomeExame' é obrigatório") String getNomeExame() {
+    public String getNomeExame() {
         return nomeExame;
     }
 
-    public void setNomeExame(@NotBlank(message = "O campo 'nomeExame' é obrigatório") String nomeExame) {
+    public void setNomeExame(String nomeExame) {
         this.nomeExame = nomeExame;
     }
 
-    public @NotNull(message = "O campo 'dataExame' é obrigatório") LocalDate getDataExame() {
+    public LocalDate getDataExame() {
         return dataExame;
     }
 
-    public void setDataExame(@NotNull(message = "O campo 'dataExame' é obrigatório") LocalDate dataExame) {
+    public void setDataExame(LocalDate dataExame) {
         this.dataExame = dataExame;
     }
 
-    public @NotNull(message = "O campo 'horaExame' é obrigatório") LocalTime getHoraExame() {
+    public LocalTime getHoraExame() {
         return horaExame;
     }
 
-    public void setHoraExame(@NotNull(message = "O campo 'horaExame' é obrigatório") LocalTime horaExame) {
+    public void setHoraExame(LocalTime horaExame) {
         this.horaExame = horaExame;
     }
 
-    public @NotBlank(message = "O campo 'tipoExame' é obrigatório") @Size(min = 4, max = 32) String getTipoExame() {
+    public String getTipoExame() {
         return tipoExame;
     }
 
-    public void setTipoExame(@NotBlank(message = "O campo 'tipoExame' é obrigatório") @Size(min = 4, max = 32) String tipoExame) {
+    public void setTipoExame(String tipoExame) {
         this.tipoExame = tipoExame;
     }
 
-    public @NotBlank(message = "O campo 'laboratorio' é obrigatório") @Size(min = 4, max = 32) String getLaboratorio() {
+    public String getLaboratorio() {
         return laboratorio;
     }
 
-    public void setLaboratorio(@NotBlank(message = "O campo 'laboratorio' é obrigatório") @Size(min = 4, max = 32) String laboratorio) {
+    public void setLaboratorio(String laboratorio) {
         this.laboratorio = laboratorio;
     }
 
@@ -99,19 +90,19 @@ public class ExameEntity {
         this.urlDocumento = urlDocumento;
     }
 
-    public @Size(min = 16, max = 1024) String getResultados() {
+    public String getResultados() {
         return resultados;
     }
 
-    public void setResultados(@Size(min = 16, max = 1024) String resultados) {
+    public void setResultados(String resultados) {
         this.resultados = resultados;
     }
 
-    public @NotNull(message = "O campo 'paciente' é obrigatório") PacienteEntity getPaciente() {
+    public PacienteEntity getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(@NotNull(message = "O campo 'paciente' é obrigatório") PacienteEntity paciente) {
+    public void setPaciente(PacienteEntity paciente) {
         this.paciente = paciente;
     }
 }
