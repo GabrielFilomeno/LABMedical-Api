@@ -41,4 +41,20 @@ public class ExameMapper {
 
         return target;
     }
+
+    public static ExameEntity atualizarExameMap(ExameEntity target, ExameRequest source, PacienteEntity paciente) {
+        if (source== null) return null;
+
+        target.setNomeExame(source.getNomeExame());
+        target.setDataExame(source.getDataExame());
+        target.setHoraExame(source.getHoraExame());
+        target.setTipoExame(source.getTipoExame());
+        target.setLaboratorio(source.getLaboratorio());
+        target.setUrlDocumento(source.getUrlDocumento());
+        target.setResultados(source.getResultados());
+        target.setPaciente(paciente);
+
+        return target;
+    }
+
 }
