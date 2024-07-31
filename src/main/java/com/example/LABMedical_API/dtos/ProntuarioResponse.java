@@ -1,18 +1,16 @@
 package com.example.LABMedical_API.dtos;
 
+import java.util.List;
+
 public class ProntuarioResponse {
 
-    private Long pacienteId;
     private String nomePaciente;
     private String convenio;
-
-    public Long getPacienteId() {
-        return pacienteId;
-    }
-
-    public void setPacienteId(Long pacienteId) {
-        this.pacienteId = pacienteId;
-    }
+    private String contatoEmergencia;
+    private String alergias;
+    private String cuidados;
+    private List<ExameResponse> listaExames;
+    private List<ConsultaResponse> listaConsultas;
 
     public String getNomePaciente() {
         return nomePaciente;
@@ -28,5 +26,45 @@ public class ProntuarioResponse {
 
     public void setConvenio(String convenio) {
         this.convenio = convenio;
+    }
+
+    public String getContatoEmergencia() {
+        return contatoEmergencia;
+    }
+
+    public void setContatoEmergencia(String contatoEmergencia) {
+        this.contatoEmergencia = contatoEmergencia;
+    }
+
+    public String getAlergias() {
+        return alergias;
+    }
+
+    public void setAlergias(String alergias) {
+        this.alergias = alergias;
+    }
+
+    public String getCuidados() {
+        return cuidados;
+    }
+
+    public void setCuidados(String cuidados) {
+        this.cuidados = cuidados;
+    }
+
+    public List<ExameResponse> getListaExames() {
+        return listaExames;
+    }
+
+    public void setListaExames(List<ExameResponse> listaExames) {
+        this.listaExames = listaExames;
+    }
+
+    public List<ConsultaResponse> getListaConsultas() {
+        return listaConsultas;
+    }
+
+    public void setListaConsultas(List<ConsultaResponse> listaConsultas) {
+        this.listaConsultas = listaConsultas;
     }
 }

@@ -50,10 +50,10 @@ public class PacienteEntity {
     @JoinColumn(name = "endereco_id")
     private EnderecoEntity endereco;
 
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ConsultaEntity> listaConsultas;
 
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ExameEntity> listaExames;
 
     //TODO: criar atributo perfil e tratar erros relacionados
