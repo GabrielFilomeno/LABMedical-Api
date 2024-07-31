@@ -12,4 +12,12 @@ public interface PacienteRepository extends JpaRepository<PacienteEntity, Long> 
     Page<PacienteEntity> findByNomePacienteContainingIgnoreCaseAndTelefonePacienteContainingAndEmailPacienteContainingIgnoreCase(
             String nomePaciente, String telefonePaciente, String emailPaciente, Pageable paginacao
     );
+
+    Page<PacienteEntity> findByNomePacienteContainingIgnoreCaseAndPacienteId(
+            String nomePaciente, Long pacienteId, Pageable paginacao
+    );
+
+    Page<PacienteEntity> findByNomePacienteContainingIgnoreCase(
+            String nomePaciente, Pageable paginacao
+    );
 }
