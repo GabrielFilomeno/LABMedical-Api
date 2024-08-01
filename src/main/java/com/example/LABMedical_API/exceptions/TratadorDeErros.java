@@ -1,6 +1,7 @@
 package com.example.LABMedical_API.exceptions;
 
 import com.example.LABMedical_API.exceptions.dtos.ErroResponse;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -54,5 +55,15 @@ public class TratadorDeErros {
         response.setMensagem(exception.getLocalizedMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<ErroResponse> trataEntityExists(EntityExistsException exception) {
+        ErroResponse response = new ErroResponse();
+
+        response.setCampo("Erro");
+        response.setMensagem(exception.getLocalizedMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 }
