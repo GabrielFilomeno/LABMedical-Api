@@ -1,5 +1,6 @@
 package com.example.LABMedical_API.controllers;
 
+import com.example.LABMedical_API.dtos.DashboardResponse;
 import com.example.LABMedical_API.dtos.ProntuarioRequest;
 import com.example.LABMedical_API.dtos.ProntuarioFiltroResponse;
 import com.example.LABMedical_API.dtos.ProntuarioResponse;
@@ -31,5 +32,11 @@ public class ProntuarioController {
     @ResponseStatus(HttpStatus.OK)
     public ProntuarioResponse buscarProntuario(@PathVariable Long pacienteId) {
         return prontuarioService.buscarProntuario(pacienteId);
+    }
+
+    @GetMapping("/dashboard")
+    @ResponseStatus(HttpStatus.OK)
+    public DashboardResponse listarDashboard() {
+        return prontuarioService.listarDashboard();
     }
 }
