@@ -53,6 +53,7 @@ public class PacienteMapper {
         target.setNumeroConvenio(source.getNumeroConvenio());
         target.setValidadeConvenio(source.getValidadeConvenio());
         target.setEndereco(enderecoMap(endereco));
+        target.setUsuarioId(source.getUsuarioId());
 
         return target;
     }
@@ -80,6 +81,7 @@ public class PacienteMapper {
         target.setValidadeConvenio(source.getValidadeConvenio());
         target.setEndereco(enderecoMap(endereco));
         target.getEndereco().setEnderecoId(enderecoId);
+        target.setUsuarioId(source.getUsuarioId());
 
         return target;
     }
@@ -133,6 +135,7 @@ public class PacienteMapper {
         target.setNumeroConvenio(source.getNumeroConvenio());
         target.setValidadeConvenio(source.getValidadeConvenio());
         target.setEndereco(source.getEndereco());
+        target.setUsuarioId(source.getUsuarioId());
         target.setNumeroConsultas(source.getListaConsultas().size());
         target.setNumeroExames(source.getListaExames().size());
 
@@ -159,6 +162,7 @@ public class PacienteMapper {
         target.setValidadeConvenio(source.getValidadeConvenio());
         target.setEndereco(enderecoMap(endereco));
         target.getEndereco().setEnderecoId(enderecoId);
+        target.setUsuarioId(source.getUsuarioId());
 
         return target;
     }

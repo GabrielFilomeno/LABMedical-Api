@@ -56,6 +56,9 @@ public class PacienteRequest {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate validadeConvenio;
 
+    @NotNull(message = "O campo 'usuarioId' é obrigatório")
+    private Long usuarioId;
+
     public @NotBlank(message = "O campo 'nomePaciente' é obrigatório") @Size(min = 8, max = 64) String getNomePaciente() {
         return nomePaciente;
     }
@@ -174,5 +177,13 @@ public class PacienteRequest {
 
     public void setValidadeConvenio(LocalDate validadeConvenio) {
         this.validadeConvenio = validadeConvenio;
+    }
+
+    public @NotNull(message = "O campo 'usuarioId' é obrigatório") Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(@NotNull(message = "O campo 'usuarioId' é obrigatório") Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

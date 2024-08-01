@@ -3,6 +3,7 @@ package com.example.LABMedical_API.services;
 import com.example.LABMedical_API.dtos.*;
 import com.example.LABMedical_API.entities.PacienteEntity;
 import com.example.LABMedical_API.repositories.PacienteRepository;
+import com.example.LABMedical_API.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,12 +15,22 @@ import static com.example.LABMedical_API.mappers.PacienteMapper.*;
 public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public PacienteService(PacienteRepository pacienteRepository) {
+    public PacienteService(PacienteRepository pacienteRepository, UsuarioRepository usuarioRepository) {
         this.pacienteRepository = pacienteRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public PacienteResponse cadastrarPaciente(PacienteRequest pacienteRequest, EnderecoRequest enderecoRequest) {
+        if (usuarioRepository.findAll().isEmpty()) {
+            throw new EntityNotFoundException("Nenhum usuário cadastrado, cadastre um usuário para cadastrar um paciente");
+        }
+
+        if (usuarioRepository.findById(pacienteRequest.getUsuarioId()).isEmpty()) {
+            throw new EntityNotFoundException("Usuário não encontrado com o id: " + pacienteRequest.getUsuarioId());
+        }
+
         PacienteEntity pacienteSalvo = pacienteRepository.save(pacienteMap(pacienteRequest, enderecoRequest));
 
         Long pacienteId = pacienteSalvo.getPacienteId();
@@ -65,6 +76,10 @@ public class PacienteService {
 
         if (pacienteRepository.findAll().isEmpty()) {
             throw new EntityNotFoundException("Não há pacientes cadastrados");
+        }
+
+        if (usuarioRepository.findById(request.getUsuarioId()).isEmpty()) {
+            throw new EntityNotFoundException("Usuário não encontrado com o id: " + request.getUsuarioId());
         }
 
         PacienteEntity pacienteEntity = pacienteRepository.findById(pacienteId).orElseThrow(

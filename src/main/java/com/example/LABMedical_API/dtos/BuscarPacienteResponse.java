@@ -25,6 +25,7 @@ public class BuscarPacienteResponse {
     private EnderecoEntity endereco;
     private Integer numeroConsultas;
     private Integer numeroExames;
+    private Long usuarioId;
 
     public Long getPacienteId() {
         return pacienteId;
@@ -176,5 +177,13 @@ public class BuscarPacienteResponse {
 
     public void setNumeroExames(Integer numeroExames) {
         this.numeroExames = numeroExames;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }
