@@ -22,6 +22,7 @@ public class PacienteResponse {
     private String convenio;
     private Integer numeroConvenio;
     private LocalDate validadeConvenio;
+    private Long usuarioId;
     private EnderecoEntity endereco;
 
     public Long getPacienteId() {
@@ -158,5 +159,13 @@ public class PacienteResponse {
 
     public void setEndereco(EnderecoEntity endereco) {
         this.endereco = endereco;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

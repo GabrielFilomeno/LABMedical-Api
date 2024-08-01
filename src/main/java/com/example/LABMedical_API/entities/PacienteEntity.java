@@ -46,6 +46,9 @@ public class PacienteEntity {
 
     private LocalDate validadeConvenio;
 
+    @Column(unique = true)
+    private Long usuarioId;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private EnderecoEntity endereco;
@@ -55,9 +58,6 @@ public class PacienteEntity {
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ExameEntity> listaExames;
-
-    //TODO: criar atributo perfil e tratar erros relacionados
-
 
     public Long getPacienteId() {
         return pacienteId;
@@ -185,6 +185,14 @@ public class PacienteEntity {
 
     public void setValidadeConvenio(LocalDate validadeConvenio) {
         this.validadeConvenio = validadeConvenio;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public EnderecoEntity getEndereco() {
