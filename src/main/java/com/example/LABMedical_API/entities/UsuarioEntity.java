@@ -34,8 +34,6 @@ public class UsuarioEntity implements UserDetails {
     )
     private Set<PerfilEntity> perfilEntities;
 
-    //TODO: criar atributo perfil
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return perfilEntities;
@@ -48,7 +46,7 @@ public class UsuarioEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nomeUsuario;
+        return emailUsuario;
     }
 
     public Long getUsuarioId() {

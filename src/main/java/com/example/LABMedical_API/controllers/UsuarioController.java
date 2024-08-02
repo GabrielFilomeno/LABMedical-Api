@@ -15,7 +15,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping
+    @PostMapping("/cadastro")
     @ResponseStatus(HttpStatus.CREATED)
     public void cadastrarUsuario(@RequestBody UsuarioRequest request) {
         usuarioService.cadastrarUsuario(request);
