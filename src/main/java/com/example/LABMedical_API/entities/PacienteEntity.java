@@ -3,6 +3,7 @@ package com.example.LABMedical_API.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -46,8 +47,9 @@ public class PacienteEntity {
 
     private LocalDate validadeConvenio;
 
-    @Column(unique = true)
-    private Long usuarioId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    private UsuarioEntity usuarioEntity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
@@ -187,12 +189,12 @@ public class PacienteEntity {
         this.validadeConvenio = validadeConvenio;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public UsuarioEntity getUsuarioEntity() {
+        return usuarioEntity;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuarioEntity(UsuarioEntity usuarioEntity) {
+        this.usuarioEntity = usuarioEntity;
     }
 
     public EnderecoEntity getEndereco() {
@@ -217,5 +219,23 @@ public class PacienteEntity {
 
     public void setListaExames(List<ExameEntity> listaExames) {
         this.listaExames = listaExames;
+    }
+
+    public List<Long> getListaConsultaId(List<ConsultaEntity> listaConsultas) {
+        List<Long> listaConsultaId = new ArrayList<>();
+        for (ConsultaEntity consulta : listaConsultas) {
+            listaConsultaId.add(consulta.getConsultaId());
+        }
+
+        return listaConsultaId;
+    }
+
+    public List<Long> getListaExameId(List<ExameEntity> listaExames) {
+        List<Long> listaExameId = new ArrayList<>();
+        for (ExameEntity exame : listaExames) {
+            listaExameId.add(exame.getExameId());
+        }
+
+        return listaExameId;
     }
 }

@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
+
 @RestController
 @RequestMapping("/exames")
 public class ExameController {
@@ -25,8 +27,8 @@ public class ExameController {
 
     @GetMapping("/{exameId}")
     @ResponseStatus(HttpStatus.OK)
-    public ExameResponse buscarExame(@PathVariable Long exameId) {
-        return exameService.buscarConsulta(exameId);
+    public ExameResponse buscarExame(@RequestHeader("Authorization") String token, @PathVariable Long exameId) throws AuthenticationException {
+        return exameService.buscarConsulta(token, exameId);
     }
 
     @PutMapping("/{exameId}")

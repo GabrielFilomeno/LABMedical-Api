@@ -3,13 +3,16 @@ package com.example.LABMedical_API.mappers;
 import com.example.LABMedical_API.dtos.*;
 import com.example.LABMedical_API.entities.EnderecoEntity;
 import com.example.LABMedical_API.entities.PacienteEntity;
+import com.example.LABMedical_API.entities.UsuarioEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PacienteMapper {
 
@@ -32,19 +35,36 @@ public class PacienteMapper {
         return target;
     }
 
-    public static PacienteEntity pacienteMap(PacienteRequest source, EnderecoRequest endereco) {
+    public static PacienteEntity pacienteMap(PacienteRequest source, EnderecoRequest endereco, UsuarioEntity usuarioEntity) {
         if (source== null) return null;
 
         PacienteEntity target = new PacienteEntity();
 
         target.setNomePaciente(source.getNomePaciente());
         target.setGeneroPaciente(source.getGeneroPaciente());
-        target.setDataNascimento(source.getDataNascimento());
+
+        if (source.getDataNascimento().equals(usuarioEntity.getDataNascimento())) {
+            target.setDataNascimento(source.getDataNascimento());
+        } else {
+            throw new RuntimeException("O campo dataNascimento do paciente deve ser igual a dataNascimento do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
+        }
+
+        if (Objects.equals(source.getCpfPaciente(), usuarioEntity.getCpf())) {
         target.setCpfPaciente(source.getCpfPaciente());
+        } else {
+            throw new RuntimeException("O campo cpfPaciente do paciente deve ser igual a cpfPaciente do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
+        }
+
         target.setRgPaciente(source.getRgPaciente());
         target.setEstadoCivil(source.getEstadoCivil());
         target.setTelefonePaciente(source.getTelefonePaciente());
-        target.setEmailPaciente(source.getEmailPaciente());
+
+        if (Objects.equals(source.getEmailPaciente(), usuarioEntity.getEmailUsuario())) {
+            target.setEmailPaciente(source.getEmailPaciente());
+        } else {
+            throw new RuntimeException("O campo emailPaciente do paciente deve ser igual ao email do usuário com id passado: id " + usuarioEntity.getUsuarioId());
+        }
+
         target.setNaturalidade(source.getNaturalidade());
         target.setContatoEmergencia(source.getContatoEmergencia());
         target.setAlergias(source.getAlergias());
@@ -52,8 +72,8 @@ public class PacienteMapper {
         target.setConvenio(source.getConvenio());
         target.setNumeroConvenio(source.getNumeroConvenio());
         target.setValidadeConvenio(source.getValidadeConvenio());
+        target.setUsuarioEntity(usuarioEntity);
         target.setEndereco(enderecoMap(endereco));
-        target.setUsuarioId(source.getUsuarioId());
 
         return target;
     }
@@ -135,24 +155,41 @@ public class PacienteMapper {
         target.setNumeroConvenio(source.getNumeroConvenio());
         target.setValidadeConvenio(source.getValidadeConvenio());
         target.setEndereco(source.getEndereco());
-        target.setUsuarioId(source.getUsuarioId());
+        target.setUsuarioId(source.getUsuarioEntity().getUsuarioId());
         target.setNumeroConsultas(source.getListaConsultas().size());
         target.setNumeroExames(source.getListaExames().size());
 
         return target;
     }
 
-    public static PacienteEntity atualizarPacienteMap(PacienteEntity target, PacienteRequest source, EnderecoRequest endereco, Long enderecoId){
+    public static PacienteEntity atualizarPacienteMap(PacienteEntity target, PacienteRequest source, EnderecoRequest endereco, Long enderecoId, UsuarioEntity usuarioEntity){
         if (source== null) return null;
 
         target.setNomePaciente(source.getNomePaciente());
         target.setGeneroPaciente(source.getGeneroPaciente());
-        target.setDataNascimento(source.getDataNascimento());
-        target.setCpfPaciente(source.getCpfPaciente());
+
+        if (source.getDataNascimento().equals(usuarioEntity.getDataNascimento())) {
+            target.setDataNascimento(source.getDataNascimento());
+        } else {
+            throw new RuntimeException("O campo dataNascimento do paciente deve ser igual a dataNascimento do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
+        }
+
+        if (Objects.equals(source.getCpfPaciente(), usuarioEntity.getCpf())) {
+            target.setCpfPaciente(source.getCpfPaciente());
+        } else {
+            throw new RuntimeException("O campo cpfPaciente do paciente deve ser igual a cpfPaciente do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
+        }
+
         target.setRgPaciente(source.getRgPaciente());
         target.setEstadoCivil(source.getEstadoCivil());
         target.setTelefonePaciente(source.getTelefonePaciente());
-        target.setEmailPaciente(source.getEmailPaciente());
+
+        if (Objects.equals(source.getEmailPaciente(), usuarioEntity.getEmailUsuario())) {
+            target.setEmailPaciente(source.getEmailPaciente());
+        } else {
+            throw new RuntimeException("O campo emailPaciente do paciente deve ser igual ao email do usuário com id passado: id " + usuarioEntity.getUsuarioId());
+        }
+
         target.setNaturalidade(source.getNaturalidade());
         target.setContatoEmergencia(source.getContatoEmergencia());
         target.setAlergias(source.getAlergias());
@@ -160,9 +197,9 @@ public class PacienteMapper {
         target.setConvenio(source.getConvenio());
         target.setNumeroConvenio(source.getNumeroConvenio());
         target.setValidadeConvenio(source.getValidadeConvenio());
+        target.setUsuarioEntity(usuarioEntity);
         target.setEndereco(enderecoMap(endereco));
         target.getEndereco().setEnderecoId(enderecoId);
-        target.setUsuarioId(source.getUsuarioId());
 
         return target;
     }

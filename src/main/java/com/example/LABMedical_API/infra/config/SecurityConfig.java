@@ -1,5 +1,6 @@
 package com.example.LABMedical_API.infra.config;
 
+import com.example.LABMedical_API.exceptions.CustomAccessDeniedHandler;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -40,10 +41,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/login", "/usuarios/cadastro").permitAll()
-                        .requestMatchers("/**").hasAnyAuthority("SCOPE_ADMIN")
+                        .requestMatchers( "/login", "/acesso-negado").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/pacientes/{pacienteId}", "/consultas/{consultasId}", "/exames/{examesId}")
+                                        .hasAnyAuthority("SCOPE_ADMIN", "SCOPE_MEDICO", "SCOPE_PACIENTE")
+                        .requestMatchers("/**").hasAuthority("SCOPE_ADMIN")
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling((exception)-> exception.accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));

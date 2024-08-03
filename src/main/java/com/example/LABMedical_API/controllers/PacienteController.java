@@ -3,10 +3,13 @@ package com.example.LABMedical_API.controllers;
 import com.example.LABMedical_API.dtos.*;
 import com.example.LABMedical_API.services.PacienteService;
 import jakarta.validation.Valid;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.naming.AuthenticationException;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -34,8 +37,8 @@ public class PacienteController {
 
     @GetMapping("/{pacienteId}")
     @ResponseStatus(HttpStatus.OK)
-    public BuscarPacienteResponse buscarPaciente(@PathVariable Long pacienteId){
-        return pacienteService.buscarPaciente(pacienteId);
+    public BuscarPacienteResponse buscarPaciente(@RequestHeader("Authorization") String token, @PathVariable Long pacienteId) throws AuthenticationException {
+        return pacienteService.buscarPaciente(token, pacienteId);
     }
 
     @PutMapping("/{pacienteId}")
