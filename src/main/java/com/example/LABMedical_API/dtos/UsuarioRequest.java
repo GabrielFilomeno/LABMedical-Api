@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+import java.time.LocalDate;
+
 public class UsuarioRequest {
 
     @NotBlank(message = "O campo 'nomeUsuario' é obrigatório")
@@ -17,7 +19,7 @@ public class UsuarioRequest {
 
     @NotNull(message = "A data de nascimento é obrigatória")
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
     @NotNull(message = "O CPF é obrigatório")
     @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12")
@@ -45,11 +47,11 @@ public class UsuarioRequest {
         this.emailUsuario = emailUsuario;
     }
 
-    public @NotNull(message = "A data de nascimento é obrigatória") String getDataNascimento() {
+    public @NotNull(message = "A data de nascimento é obrigatória") LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(@NotNull(message = "A data de nascimento é obrigatória") String dataNascimento) {
+    public void setDataNascimento(@NotNull(message = "A data de nascimento é obrigatória") LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

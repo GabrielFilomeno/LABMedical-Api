@@ -29,8 +29,7 @@ public class ConsultaEntity {
 
     private String dosagemPrecaucoes;
 
-    @NotNull(message = "O campo 'paciente' é obrigatório")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id")
     private PacienteEntity paciente;
 
@@ -90,11 +89,11 @@ public class ConsultaEntity {
         this.dosagemPrecaucoes = dosagemPrecaucoes;
     }
 
-    public @NotNull(message = "O campo 'paciente' é obrigatório") PacienteEntity getPaciente() {
+    public PacienteEntity getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(@NotNull(message = "O campo 'paciente' é obrigatório") PacienteEntity paciente) {
+    public void setPaciente(PacienteEntity paciente) {
         this.paciente = paciente;
     }
 }

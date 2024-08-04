@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class UsuarioEntity implements UserDetails {
     @Column(unique=true)
     private String emailUsuario;
 
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
     @Column(unique=true)
     private String cpf;
@@ -73,11 +74,11 @@ public class UsuarioEntity implements UserDetails {
         this.emailUsuario = emailUsuario;
     }
 
-    public String getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -103,5 +104,11 @@ public class UsuarioEntity implements UserDetails {
 
     public void setPerfilEntities(Set<PerfilEntity> perfilEntities) {
         this.perfilEntities = perfilEntities;
+    }
+
+    public String getPerfilEntity() {
+        return perfilEntities.stream().findAny().orElseThrow(
+                ()-> new EntityNotFoundException("Perfil não encontrado")
+        ).getNomePerfil();
     }
 }

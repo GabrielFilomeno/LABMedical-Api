@@ -30,7 +30,7 @@ public class ExameEntity {
 
     private String resultados;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id")
     private PacienteEntity paciente;
 

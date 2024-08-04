@@ -2,6 +2,7 @@ package com.example.LABMedical_API.services;
 
 import com.example.LABMedical_API.dtos.LoginRequest;
 import com.example.LABMedical_API.dtos.UsuarioRequest;
+import com.example.LABMedical_API.dtos.UsuarioResponse;
 import com.example.LABMedical_API.entities.PerfilEntity;
 import com.example.LABMedical_API.entities.UsuarioEntity;
 import com.example.LABMedical_API.repositories.PerfilRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 import static com.example.LABMedical_API.mappers.UsuarioMapper.usuarioRequestMap;
+import static com.example.LABMedical_API.mappers.UsuarioMapper.usuarioResponseMap;
 
 @Service
 public class UsuarioService {
@@ -28,7 +30,13 @@ public class UsuarioService {
         this.perfilService = perfilService;
     }
 
-    public void cadastrarUsuario(UsuarioRequest request) {
+    public void teste() {
+        String senhaDoUsuario = "teste123"; // Senha fornecida pelo usuário
+        String senhaCriptografada = passwordEncoder.encode(senhaDoUsuario);
+        System.out.println(senhaCriptografada);
+    }
+
+    public UsuarioResponse cadastrarUsuario(UsuarioRequest request) {
         if (usuarioRepository.findByEmailUsuario(request.getEmailUsuario()).isPresent()) {
             throw new EntityExistsException("Ja existe um usuário cadastrado com o email:" + request.getEmailUsuario());
         }
@@ -39,7 +47,7 @@ public class UsuarioService {
         usuarioEntity.setSenha(passwordEncoder.encode(request.getSenha()));
         usuarioEntity.setPerfilEntities(Set.of(perfilEntity));
 
-        usuarioRepository.save(usuarioEntity);
+        return usuarioResponseMap(usuarioRepository.save(usuarioEntity));
     }
 
     public UsuarioEntity validarUsuario(LoginRequest loginRequest) {
