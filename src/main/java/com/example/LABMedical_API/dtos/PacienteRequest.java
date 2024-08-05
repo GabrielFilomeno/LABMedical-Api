@@ -19,7 +19,7 @@ public class PacienteRequest {
     private LocalDate dataNascimento;
 
     @NotBlank   (message = "O CPF é obrigatório")
-    @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12")
+    @Pattern(regexp = "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})$", message = "CPF deve ser no formato 123.456.789-12")
     private String cpfPaciente;
 
     @NotBlank(message = "O campo 'rgPaciente' é obrigatório")
@@ -83,11 +83,11 @@ public class PacienteRequest {
         this.dataNascimento = dataNascimento;
     }
 
-    public @NotBlank(message = "O CPF é obrigatório") @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12") String getCpfPaciente() {
+    public @NotBlank(message = "O CPF é obrigatório") @Pattern(regexp = "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})$", message = "CPF deve ser no formato 123.456.789-12") String getCpfPaciente() {
         return cpfPaciente;
     }
 
-    public void setCpfPaciente(@NotBlank(message = "O CPF é obrigatório") @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12") String cpfPaciente) {
+    public void setCpfPaciente(@NotBlank(message = "O CPF é obrigatório") @Pattern(regexp = "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})$", message = "CPF deve ser no formato 123.456.789-12") String cpfPaciente) {
         this.cpfPaciente = cpfPaciente;
     }
 

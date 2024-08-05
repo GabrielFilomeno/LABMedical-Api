@@ -37,6 +37,4 @@ public class PerfilEntity implements GrantedAuthority {
     public String getAuthority() {
         return this.nomePerfil;
     }
-
-    //TODO: implementar de GrantedAuthority e criar atributos
 }

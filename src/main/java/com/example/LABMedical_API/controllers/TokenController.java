@@ -4,6 +4,7 @@ import com.example.LABMedical_API.dtos.LoginRequest;
 import com.example.LABMedical_API.dtos.LoginResponse;
 import com.example.LABMedical_API.entities.UsuarioEntity;
 import com.example.LABMedical_API.services.UsuarioService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -29,7 +30,7 @@ public class TokenController {
     private static final long TEMPO_EXPIRACAO = 36000L;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse>gerarToken(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse>gerarToken(@RequestBody LoginRequest loginRequest) throws BadRequestException {
 
         UsuarioEntity usuarioEntity = usuarioService.validarUsuario(loginRequest);
 

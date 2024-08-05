@@ -1,8 +1,6 @@
 package com.example.LABMedical_API.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "enderecos")

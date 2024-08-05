@@ -4,12 +4,12 @@ import com.example.LABMedical_API.dtos.*;
 import com.example.LABMedical_API.entities.EnderecoEntity;
 import com.example.LABMedical_API.entities.PacienteEntity;
 import com.example.LABMedical_API.entities.UsuarioEntity;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +35,7 @@ public class PacienteMapper {
         return target;
     }
 
-    public static PacienteEntity pacienteMap(PacienteRequest source, EnderecoRequest endereco, UsuarioEntity usuarioEntity) {
+    public static PacienteEntity pacienteMap(PacienteRequest source, EnderecoRequest endereco, UsuarioEntity usuarioEntity) throws BadRequestException {
         if (source== null) return null;
 
         PacienteEntity target = new PacienteEntity();
@@ -46,13 +46,13 @@ public class PacienteMapper {
         if (source.getDataNascimento().equals(usuarioEntity.getDataNascimento())) {
             target.setDataNascimento(source.getDataNascimento());
         } else {
-            throw new RuntimeException("O campo dataNascimento do paciente deve ser igual a dataNascimento do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
+            throw new BadRequestException("O campo dataNascimento do paciente deve ser igual a dataNascimento do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
         }
 
         if (Objects.equals(source.getCpfPaciente(), usuarioEntity.getCpf())) {
         target.setCpfPaciente(source.getCpfPaciente());
         } else {
-            throw new RuntimeException("O campo cpfPaciente do paciente deve ser igual a cpfPaciente do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
+            throw new BadRequestException("O campo cpfPaciente do paciente deve ser igual a cpfPaciente do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
         }
 
         target.setRgPaciente(source.getRgPaciente());
@@ -62,7 +62,7 @@ public class PacienteMapper {
         if (Objects.equals(source.getEmailPaciente(), usuarioEntity.getEmailUsuario())) {
             target.setEmailPaciente(source.getEmailPaciente());
         } else {
-            throw new RuntimeException("O campo emailPaciente do paciente deve ser igual ao email do usuário com id passado: id " + usuarioEntity.getUsuarioId());
+            throw new BadRequestException("O campo emailPaciente do paciente deve ser igual ao email do usuário com id passado: id " + usuarioEntity.getUsuarioId());
         }
 
         target.setNaturalidade(source.getNaturalidade());
@@ -162,7 +162,7 @@ public class PacienteMapper {
         return target;
     }
 
-    public static PacienteEntity atualizarPacienteMap(PacienteEntity target, PacienteRequest source, EnderecoRequest endereco, Long enderecoId, UsuarioEntity usuarioEntity){
+    public static PacienteEntity atualizarPacienteMap(PacienteEntity target, PacienteRequest source, EnderecoRequest endereco, Long enderecoId, UsuarioEntity usuarioEntity) throws BadRequestException {
         if (source== null) return null;
 
         target.setNomePaciente(source.getNomePaciente());
@@ -171,13 +171,13 @@ public class PacienteMapper {
         if (source.getDataNascimento().equals(usuarioEntity.getDataNascimento())) {
             target.setDataNascimento(source.getDataNascimento());
         } else {
-            throw new RuntimeException("O campo dataNascimento do paciente deve ser igual a dataNascimento do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
+            throw new BadRequestException("O campo dataNascimento do paciente deve ser igual a dataNascimento do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
         }
 
         if (Objects.equals(source.getCpfPaciente(), usuarioEntity.getCpf())) {
             target.setCpfPaciente(source.getCpfPaciente());
         } else {
-            throw new RuntimeException("O campo cpfPaciente do paciente deve ser igual a cpfPaciente do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
+            throw new BadRequestException("O campo cpfPaciente do paciente deve ser igual a cpfPaciente do usuário com id passado: id  " + usuarioEntity.getUsuarioId());
         }
 
         target.setRgPaciente(source.getRgPaciente());
@@ -187,7 +187,7 @@ public class PacienteMapper {
         if (Objects.equals(source.getEmailPaciente(), usuarioEntity.getEmailUsuario())) {
             target.setEmailPaciente(source.getEmailPaciente());
         } else {
-            throw new RuntimeException("O campo emailPaciente do paciente deve ser igual ao email do usuário com id passado: id " + usuarioEntity.getUsuarioId());
+            throw new BadRequestException("O campo emailPaciente do paciente deve ser igual ao email do usuário com id passado: id " + usuarioEntity.getUsuarioId());
         }
 
         target.setNaturalidade(source.getNaturalidade());
