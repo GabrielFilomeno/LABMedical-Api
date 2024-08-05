@@ -5,10 +5,8 @@ import com.example.LABMedical_API.dtos.UsuarioRequest;
 import com.example.LABMedical_API.dtos.UsuarioResponse;
 import com.example.LABMedical_API.entities.PerfilEntity;
 import com.example.LABMedical_API.entities.UsuarioEntity;
-import com.example.LABMedical_API.repositories.PerfilRepository;
 import com.example.LABMedical_API.repositories.UsuarioRepository;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +28,7 @@ public class UsuarioService {
         this.perfilService = perfilService;
     }
 
-    public void teste() {
-        String senhaDoUsuario = "teste123"; // Senha fornecida pelo usuário
-        String senhaCriptografada = passwordEncoder.encode(senhaDoUsuario);
-        System.out.println(senhaCriptografada);
-    }
-
     public UsuarioResponse cadastrarUsuario(UsuarioRequest request) {
-        if (usuarioRepository.findByEmailUsuario(request.getEmailUsuario()).isPresent()) {
-            throw new EntityExistsException("Ja existe um usuário cadastrado com o email:" + request.getEmailUsuario());
-        }
 
         PerfilEntity perfilEntity = perfilService.validaPerfil(request.getNomePerfil());
 
@@ -50,13 +39,13 @@ public class UsuarioService {
         return usuarioResponseMap(usuarioRepository.save(usuarioEntity));
     }
 
-    public UsuarioEntity validarUsuario(LoginRequest loginRequest) {
+    public UsuarioEntity validarUsuario(LoginRequest loginRequest) throws BadRequestException {
 
         UsuarioEntity usuarioEntity = usuarioRepository.findByEmailUsuario(loginRequest.getEmailUsuario())
-                .orElseThrow(()-> new EntityNotFoundException("Nenhum usuário encontrado com o email: " + loginRequest.getEmailUsuario()));
+                .orElseThrow(()-> new BadRequestException("Dados ausentes ou incorretos."));
 
         if (!passwordEncoder.matches(loginRequest.getSenha(), usuarioEntity.getPassword())) {
-            throw new EntityNotFoundException("Senha incorreta para usuário com email: " + loginRequest.getEmailUsuario());
+            throw new BadRequestException("Dados ausentes ou incorretos.");
         }
 
         return usuarioEntity;

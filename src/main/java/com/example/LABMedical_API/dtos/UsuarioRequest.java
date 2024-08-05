@@ -21,8 +21,8 @@ public class UsuarioRequest {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
-    @NotNull(message = "O CPF é obrigatório")
-    @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12")
+    @NotBlank(message = "O CPF é obrigatório")
+    @Pattern(regexp = "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})$", message = "CPF deve ser no formato 123.456.789-12")
     private String cpf;
 
     @NotBlank(message = "O campo 'senhaUsuaraio' é obrigatório")
@@ -55,11 +55,11 @@ public class UsuarioRequest {
         this.dataNascimento = dataNascimento;
     }
 
-    public @NotNull(message = "O CPF é obrigatório") @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12") String getCpf() {
+    public @NotBlank(message = "O CPF é obrigatório") @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12") String getCpf() {
         return cpf;
     }
 
-    public void setCpf(@NotNull(message = "O CPF é obrigatório") @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12") String cpf) {
+    public void setCpf(@NotBlank(message = "O CPF é obrigatório") @Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}", message = "CPF deve ser no formato 123.456.789-12") String cpf) {
         this.cpf = cpf;
     }
 

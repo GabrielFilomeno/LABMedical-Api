@@ -3,7 +3,7 @@ package com.example.LABMedical_API.controllers;
 import com.example.LABMedical_API.dtos.*;
 import com.example.LABMedical_API.services.PacienteService;
 import jakarta.validation.Valid;
-import org.apache.tomcat.util.http.parser.Authorization;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class PacienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PacienteResponse cadastrarPaciente(@Valid @RequestBody PacienteEnderecoRequest request) {
+    public PacienteResponse cadastrarPaciente(@Valid @RequestBody PacienteEnderecoRequest request) throws BadRequestException {
 
         return pacienteService.cadastrarPaciente(request.getPacienteRequest(), request.getEnderecoRequest());
     }
@@ -43,7 +43,7 @@ public class PacienteController {
 
     @PutMapping("/{pacienteId}")
     @ResponseStatus(HttpStatus.OK)
-    public PacienteResponse atualizarPaciente(@PathVariable Long pacienteId, @Valid @RequestBody PacienteEnderecoRequest request){
+    public PacienteResponse atualizarPaciente(@PathVariable Long pacienteId, @Valid @RequestBody PacienteEnderecoRequest request) throws BadRequestException {
         return pacienteService.atualizarPaciente(pacienteId, request.getPacienteRequest(), request.getEnderecoRequest());
     }
 

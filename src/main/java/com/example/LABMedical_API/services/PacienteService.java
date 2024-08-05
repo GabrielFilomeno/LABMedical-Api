@@ -2,11 +2,11 @@ package com.example.LABMedical_API.services;
 
 import com.example.LABMedical_API.dtos.*;
 import com.example.LABMedical_API.entities.PacienteEntity;
-import com.example.LABMedical_API.entities.PerfilEntity;
 import com.example.LABMedical_API.entities.UsuarioEntity;
 import com.example.LABMedical_API.repositories.PacienteRepository;
 import com.example.LABMedical_API.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -32,7 +32,7 @@ public class PacienteService {
         this.jwtDecoder = jwtDecoder;
     }
 
-    public PacienteResponse cadastrarPaciente(PacienteRequest pacienteRequest, EnderecoRequest enderecoRequest) {
+    public PacienteResponse cadastrarPaciente(PacienteRequest pacienteRequest, EnderecoRequest enderecoRequest) throws BadRequestException {
         if (usuarioRepository.findAll().isEmpty()) {
             throw new EntityNotFoundException("Nenhum usuário cadastrado, cadastre um usuário para cadastrar um paciente");
         }
@@ -42,12 +42,12 @@ public class PacienteService {
         );
 
         if (!"PACIENTE".equals(usuarioEntity.getPerfilEntity())) {
-            throw new  RuntimeException("O usuário com id: " + usuarioEntity.getUsuarioId() +
+            throw new BadRequestException("O usuário com id: " + usuarioEntity.getUsuarioId() +
                     " tem perfil de: " + usuarioEntity.getPerfilEntity() +
                     ". Você precisa usar o id de um usuário com perfil de PACIENTE");
         }
         if (pacienteRepository.findFirstByUsuarioEntity(usuarioEntity).isPresent()) {
-            throw new RuntimeException("O usuário com o id: " + pacienteRequest.getUsuarioId() + " já esta vinculado a outro paciente");
+            throw new BadRequestException("O usuário com o id: " + pacienteRequest.getUsuarioId() + " já esta vinculado a outro paciente");
         }
 
         PacienteEntity pacienteSalvo = pacienteRepository.save(pacienteMap(pacienteRequest, enderecoRequest, usuarioEntity));
@@ -92,9 +92,10 @@ public class PacienteService {
         if ("PACIENTE".equals(tokenDecodificado.getClaim("scope"))) {
             String pacienteEmail = pacienteEntity.getEmailPaciente();
             String emailToken = tokenDecodificado.getSubject();
+            System.out.println(emailToken);
 
             PacienteEntity pacienteToken = pacienteRepository.findByEmailPaciente(emailToken).orElseThrow(
-                    ()-> new EntityNotFoundException("Esse usuário ainda não foi vinculado a um paciente")
+                    ()-> new EntityNotFoundException("O usuário portador do token ainda não foi vinculado a um paciente. O paciente só pode acessar seus próprios dados.")
             );
 
             if (!pacienteEmail.equals(emailToken)) {
@@ -107,7 +108,7 @@ public class PacienteService {
         return buscarPacienteMap(pacienteEntity);
     }
 
-    public PacienteResponse atualizarPaciente(Long pacienteId, PacienteRequest request, EnderecoRequest endereco) {
+    public PacienteResponse atualizarPaciente(Long pacienteId, PacienteRequest request, EnderecoRequest endereco) throws BadRequestException {
 
         if (pacienteRepository.findAll().isEmpty()) {
             throw new EntityNotFoundException("Não há pacientes cadastrados");
@@ -122,14 +123,14 @@ public class PacienteService {
         );
 
         if (!"PACIENTE".equals(usuarioEntity.getPerfilEntity())) {
-            throw new  RuntimeException("O usuário com id: " + usuarioEntity.getUsuarioId() +
+            throw new BadRequestException("O usuário com id: " + usuarioEntity.getUsuarioId() +
                     " tem perfil de: " + usuarioEntity.getPerfilEntity() +
                     ". Você precisa usar o id de um usuário com perfil de PACIENTE");
         }
 
         if (!Objects.equals(request.getUsuarioId(), pacienteEntity.getUsuarioEntity().getUsuarioId())) {
             if (pacienteRepository.findFirstByUsuarioEntity(usuarioEntity).isPresent()) {
-                throw new RuntimeException("O usuário com o id: " + request.getUsuarioId() + " já esta vinculado a outro paciente");
+                throw new BadRequestException("O usuário com o id: " + request.getUsuarioId() + " já esta vinculado a outro paciente");
             }
         }
 
