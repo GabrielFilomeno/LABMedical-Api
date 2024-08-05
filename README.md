@@ -3,7 +3,7 @@
 
 ### Projeto feito no curso do Lab 365
 
-A ideia do projeto é ser uma API REST Back-End para um software de gestão de prontuários em ambiente hospitalar, baseado no cadastros, consulta, atualização e deleção de pacientes, consultas e exames. Para acessar os endpoints é necessário fazer login e cada usuário é vinculado a um perfil, ADMIN, MEDICO e PACIENTE.
+A ideia do projeto é ser uma API REST Back-End para um software de gestão de prontuários em ambiente hospitalar, baseado no cadastro, consulta, atualização e deleção de pacientes, consultas e exames. Para acessar os endpoints é necessário fazer login e cada usuário é vinculado a um perfil, ADMIN, MEDICO e PACIENTE.
 
 #### Perfil de ADMIN:
 Tem acesso completo a todos os endpoints, inclusive unico capaz de cadastrar novos usuários.
